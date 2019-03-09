@@ -2,7 +2,6 @@ package pl.edu.pw.jagiello.rubikscube.model.state;
 
 import pl.edu.pw.jagiello.rubikscube.model.Model;
 import pl.edu.pw.jagiello.rubikscube.view.View;
-import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 import pl.edu.pw.jagiello.rubikscube.view.events.Event;
 
 public class ResultState extends State {
@@ -17,7 +16,7 @@ public class ResultState extends State {
       public void run() {
         try {
           Thread.sleep(3000);
-          context.setState(new FreeState(model, view));
+          context.setState(() -> new FreeState(model, view));
         } catch (InterruptedException ignored) {
         }
       }
@@ -28,11 +27,9 @@ public class ResultState extends State {
   @Override public void handle(StateContext context,
       Event viewEvent) {
     super.handle(context, viewEvent);
+  }
 
-    if (viewEvent.getEvent() == AllowedEvents.SCRAMBLE) {
-      freeStatePostponed.interrupt();
-      this.model.scramble();
-      context.setState(new PreinspectionState(context, model, view));
-    }
+  @Override public void close() {
+    freeStatePostponed.interrupt();
   }
 }

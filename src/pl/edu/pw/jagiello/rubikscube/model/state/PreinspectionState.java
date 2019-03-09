@@ -12,13 +12,13 @@ public class PreinspectionState extends State {
 
   public PreinspectionState(final StateContext context, final Model model, final View view) {
     super(model, view);
-    final int seconds = 4;
+    final int seconds = 12;
     view.countDownPreinspectionTimer(seconds);
     solvingStatePostponed = new Thread() {
       public void run() {
         try {
           Thread.sleep(seconds * 1000);
-          context.setState(new SolvingState(model, view));
+          context.setState(() -> new SolvingState(model, view));
         } catch (InterruptedException ignored) {
         }
       }
@@ -30,17 +30,17 @@ public class PreinspectionState extends State {
     super.handle(context, viewEvent);
     if (viewEvent instanceof MultipleEvent) {
       if (viewEvent.getEvent().isInGroup(AllowedEvents.Group.MOVE)) {
-        solvingStatePostponed.interrupt();
-        context.setState(new SolvingState(model, view));
+        context.setState(() -> new SolvingState(model, view));
 
         model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
       } else if (viewEvent.getEvent().isInGroup(AllowedEvents.Group.ROTATE)) {
         model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
       }
-    } else if (viewEvent.getEvent() == AllowedEvents.SCRAMBLE) {
-      solvingStatePostponed.interrupt();
-      this.model.scramble();
-      context.setState(new PreinspectionState(context, model, view));
     }
+  }
+
+  @Override public void close() {
+    view.stopTimer();
+    solvingStatePostponed.interrupt();
   }
 }

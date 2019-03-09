@@ -16,12 +16,15 @@ public abstract class State {
   }
 
   public void handle(StateContext context, Event viewEvent) {
-    // obsluz akcje zamkniecia
     if (viewEvent.getEvent() == AllowedEvents.EXIT) {
       System.exit(0);
+    } else if (viewEvent.getEvent() == AllowedEvents.SCRAMBLE) {
+      this.model.scramble();
+      context.setState(() -> new PreinspectionState(context, model, view));
     }
   }
 
+  public void close() {}
 
 }
 
