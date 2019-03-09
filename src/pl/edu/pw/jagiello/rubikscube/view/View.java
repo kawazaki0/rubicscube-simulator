@@ -36,4 +36,18 @@ public class View {
       }
     });
   }
+
+  public void countDownPreinspectionTimer(int seconds) {
+    window.countDownPreinspectionTimer(seconds);
+  }
+
+  public void startTimer() {
+    window.startTimer();
+  }
+
+  public void stopTimer() {
+    window.stopTimer();
+
+  }
+
 }

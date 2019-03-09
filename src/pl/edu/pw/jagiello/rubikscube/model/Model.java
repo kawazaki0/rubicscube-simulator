@@ -274,7 +274,7 @@ public class Model {
     // niepowtarzania poprzedniego ruchu
     final Set<AllowedEvents> possibleMoves = new HashSet<AllowedEvents>();
 
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 100; i++) {
       // dodaj wszystkie mozliwe ruchy
       possibleMoves.addAll(moves);
 

@@ -13,7 +13,7 @@ public class RubiksCube {
    *
    * @param args Lista argumentow w trakcie uruchamiania programu
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] args) throws InterruptedException {
     final Controller controller = new Controller();
     controller.runLoop();
   }

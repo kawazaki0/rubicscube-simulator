@@ -24,7 +24,7 @@ public class Controller {
    */
   final private Model model;
   /**
-   * 
+   *
    */
   final private StateContext state;
   /**
@@ -46,24 +46,19 @@ public class Controller {
    */
   public Controller() {
     model = new Model();
-    state = new StateContext(model);
     view = new View(eventQueue);
+    state = new StateContext(model, view);
     view.updateState(model.getCubeStateView());
   }
 
   /**
    * Funkcja z pętlą nieskończoną czekającą na zdarzenie z widoku.
    */
-  public void runLoop() {
+  public void runLoop() throws InterruptedException {
     while (true) {
       Event viewEvent;
-      try {
-        viewEvent = eventQueue.take();
-        state.handle(viewEvent);
-      } catch (final InterruptedException e1) {
-        e1.printStackTrace();
-      }
-
+      viewEvent = eventQueue.take();
+      state.handle(viewEvent);
       view.updateState(model.getCubeStateView());
     }
   }

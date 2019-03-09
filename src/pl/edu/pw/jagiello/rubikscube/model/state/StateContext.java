@@ -1,14 +1,15 @@
 package pl.edu.pw.jagiello.rubikscube.model.state;
 
 import pl.edu.pw.jagiello.rubikscube.model.Model;
+import pl.edu.pw.jagiello.rubikscube.view.View;
 import pl.edu.pw.jagiello.rubikscube.view.events.Event;
 
 public class StateContext {
 
   private State myState;
 
-  public StateContext(Model model) {
-    setState(new FreeState(model));
+  public StateContext(Model model, View view) {
+    setState(new FreeState(model, view));
   }
 
   /**

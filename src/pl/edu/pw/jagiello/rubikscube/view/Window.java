@@ -5,6 +5,7 @@ import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 import pl.edu.pw.jagiello.rubikscube.view.events.Event;
 import pl.edu.pw.jagiello.rubikscube.view.events.MultipleEvent;
 import pl.edu.pw.jagiello.rubikscube.view.events.SingleEvent;
+import pl.edu.pw.jagiello.rubikscube.view.timer.TimerPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,8 @@ class Window extends JFrame implements KeyListener {
    * panel - panel wyswietlajacy kostke rubika
    */
   private final Form panel;
+
+  private final TimerPanel timer;
   /**
    * eventQueue - kolejka zdarzen miedzy kontrolerem a widokiem
    */
@@ -43,6 +46,10 @@ class Window extends JFrame implements KeyListener {
    */
   Window(final LinkedBlockingQueue<Event> eventQueue) {
     super("Rysowanie");
+    setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    timer = new TimerPanel();
+    add(timer);
+    setBackground(Color.BLACK);
 
     // wypelnij mape znak na zdarzenie
     keyToEventMap.put(KeyEvent.VK_ESCAPE, new SingleEvent(AllowedEvents.EXIT));
@@ -75,7 +82,7 @@ class Window extends JFrame implements KeyListener {
     setTitle("Symulator kostki rubika");
     addKeyListener(this);
     pack();
-    setMinimumSize(new Dimension(300, 300));
+    setMinimumSize(new Dimension(350, 350));
     setResizable(false);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -116,5 +123,17 @@ class Window extends JFrame implements KeyListener {
 
   public void keyTyped(final KeyEvent arg0) {
 
+  }
+
+  public void countDownPreinspectionTimer(int seconds) {
+    timer.countDown(seconds);
+  }
+
+  public void startTimer() {
+    timer.start();
+  }
+
+  public void stopTimer() {
+    timer.stop();
   }
 }
