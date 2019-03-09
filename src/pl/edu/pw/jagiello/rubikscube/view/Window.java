@@ -67,6 +67,14 @@ class Window extends JFrame implements KeyListener {
     mapKey(KeyEvent.VK_S, AllowedEvents.MOVE_D, 1);
     mapKey(KeyEvent.VK_O, AllowedEvents.MOVE_B, 3);
     mapKey(KeyEvent.VK_W, AllowedEvents.MOVE_B, 1);
+
+
+    mapKey(KeyEvent.VK_U, AllowedEvents.MOVE_RW, 1);
+    mapKey(KeyEvent.VK_M, AllowedEvents.MOVE_RW, 3);
+    mapKey(KeyEvent.VK_R, AllowedEvents.MOVE_LW, 3);
+    mapKey(KeyEvent.VK_V, AllowedEvents.MOVE_LW, 1);
+
+
     mapKey(KeyEvent.VK_P, AllowedEvents.ROTATE_Z, 1);
     mapKey(KeyEvent.VK_Q, AllowedEvents.ROTATE_Z, 3);
     mapKey(KeyEvent.VK_Y, AllowedEvents.ROTATE_X, 1);

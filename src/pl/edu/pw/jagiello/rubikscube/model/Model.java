@@ -7,8 +7,10 @@ import pl.edu.pw.jagiello.rubikscube.model.moveapplier.BackMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.DownMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.FrontMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.LeftMoveApplier;
+import pl.edu.pw.jagiello.rubikscube.model.moveapplier.LeftSliceMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.MoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.RightMoveApplier;
+import pl.edu.pw.jagiello.rubikscube.model.moveapplier.RightSliceMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.UpMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 
@@ -52,7 +54,9 @@ public class Model {
   public Model() {
     // wypelnij applier ruchów do metod wykonujacych dany ruch
     moveApplier.put(AllowedEvents.MOVE_L, new LeftMoveApplier(this));
+    moveApplier.put(AllowedEvents.MOVE_LW, new LeftSliceMoveApplier(this));
     moveApplier.put(AllowedEvents.MOVE_R, new RightMoveApplier(this));
+    moveApplier.put(AllowedEvents.MOVE_RW, new RightSliceMoveApplier(this));
     moveApplier.put(AllowedEvents.MOVE_U, new UpMoveApplier(this));
     moveApplier.put(AllowedEvents.MOVE_D, new DownMoveApplier(this));
     moveApplier.put(AllowedEvents.MOVE_F, new FrontMoveApplier(this));

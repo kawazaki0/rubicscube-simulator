@@ -35,6 +35,10 @@ public enum AllowedEvents {
    */
   MOVE_L(Group.MOVE),
 
+
+  MOVE_RW(Group.MOVE),
+  MOVE_LW(Group.MOVE),
+
   /**
    * Obrot wzgledem osi X
    */
