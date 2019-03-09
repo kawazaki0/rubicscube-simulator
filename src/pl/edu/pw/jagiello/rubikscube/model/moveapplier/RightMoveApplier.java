@@ -24,11 +24,11 @@ public class RightMoveApplier implements MoveApplier {
     this.model = model;
   }
 
-  public void applyMove(final int rot) {
+  public void applyMove(final int rotateCount) {
     model.rotateZ();
     model.rotateZ();
     model.rotateZ();
-    for (int i = 0; i < rot; i++) {
+    for (int i = 0; i < rotateCount; i++) {
       model.moveU();
     }
     model.rotateZ();

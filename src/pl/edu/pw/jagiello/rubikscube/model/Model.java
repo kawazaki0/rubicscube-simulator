@@ -294,11 +294,11 @@ public class Model {
    * Wykonaj ruch na kostce za pomoca MoveApplier'a
    *
    * @param moveToProcess Ruch, ktory nalezy wykonac
-   * @param rotate        krotnosc ruchu
+   * @param rotateCount        krotnosc ruchu
    */
-  public void makeMove(final AllowedEvents moveToProcess, final int rotate) {
+  public void makeMove(final AllowedEvents moveToProcess, final int rotateCount) {
     if (moveApplier.containsKey(moveToProcess)) {
-      moveApplier.get(moveToProcess).applyMove(rotate);
+      moveApplier.get(moveToProcess).applyMove(rotateCount);
     }
   }
 }

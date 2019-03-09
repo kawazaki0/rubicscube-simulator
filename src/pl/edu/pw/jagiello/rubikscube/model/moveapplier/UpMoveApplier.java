@@ -24,8 +24,8 @@ public class UpMoveApplier implements MoveApplier {
     this.model = model;
   }
 
-  public void applyMove(final int rot) {
-    for (int i = 0; i < rot; i++) {
+  public void applyMove(final int rotateCount) {
+    for (int i = 0; i < rotateCount; i++) {
       model.moveU();
     }
   }

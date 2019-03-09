@@ -9,7 +9,7 @@ public interface MoveApplier {
   /**
    * Wykonaj ruch
    *
-   * @param obrot krotnosc obrotu wg wskazowek zegara
+   * @param rotateCount krotnosc obrotu wg wskazowek zegara
    */
-  void applyMove(final int obrot);
+  void applyMove(final int rotateCount);
 }

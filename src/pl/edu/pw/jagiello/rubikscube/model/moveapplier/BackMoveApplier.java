@@ -26,11 +26,11 @@ public class BackMoveApplier implements MoveApplier {
   /* (non-Javadoc)
    * @see pl.edu.pw.jagiello.rubikscube.model.moveapplier.MoveApplier#applyMove(int)
    */
-  public void applyMove(final int rot) {
+  public void applyMove(final int rotateCount) {
     model.rotateX();
     model.rotateX();
     model.rotateX();
-    for (int i = 0; i < rot; i++) {
+    for (int i = 0; i < rotateCount; i++) {
       model.moveU();
     }
     model.rotateX();
