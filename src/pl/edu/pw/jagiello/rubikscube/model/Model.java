@@ -36,10 +36,6 @@ public class Model {
   private final Map<AllowedEvents, MoveApplier> moveApplier =
       new HashMap<AllowedEvents, MoveApplier>();
   /**
-   * Mapa <Losowa liczba, Typ events czyli ruch>
-   */
-  private final Map<Integer, AllowedEvents> scrambler = new HashMap<Integer, AllowedEvents>();
-  /**
    * Set <Naklejka, ruch do wykonania>
    */
   private final Set<AllowedEvents> moves = new HashSet<AllowedEvents>();
@@ -64,14 +60,6 @@ public class Model {
     moveApplier.put(AllowedEvents.ROTATE_X, new AxisXRotateApplier(this));
     moveApplier.put(AllowedEvents.ROTATE_Y, new AxisYRotateApplier(this));
     moveApplier.put(AllowedEvents.ROTATE_Z, new AxisZRotateApplier(this));
-
-    // wypelnij mape wylosowanej liczby do ruchu
-    scrambler.put(0, AllowedEvents.MOVE_L);
-    scrambler.put(1, AllowedEvents.MOVE_R);
-    scrambler.put(2, AllowedEvents.MOVE_U);
-    scrambler.put(3, AllowedEvents.MOVE_D);
-    scrambler.put(4, AllowedEvents.MOVE_F);
-    scrambler.put(5, AllowedEvents.MOVE_B);
 
     // wypelnij mape mozliwych ruchow podczas mieszania kostki
     moves.add(AllowedEvents.MOVE_L);
@@ -276,22 +264,20 @@ public class Model {
 
     // kolekcja mozliwych ruchow do wykonania w danej iteracji z uwzglednieniem
     // niepowtarzania poprzedniego ruchu
-    final Set<AllowedEvents> possibleMoves = new HashSet<AllowedEvents>();
+    final Set<AllowedEvents> possibleMoves = new HashSet<AllowedEvents>(moves);
 
     for (int i = 0; i < 100; i++) {
-      // dodaj wszystkie mozliwe ruchy
-      possibleMoves.addAll(moves);
-
       // usun poprzedni ruch
       possibleMoves.remove(previousMove);
 
       // wygeneruj nowy ruch
-      moveOnCube = scrambler.get(randInt.nextInt(6));
+      moveOnCube = (AllowedEvents) possibleMoves.toArray()[randInt.nextInt(possibleMoves.size())];
 
-      // sprawdz czy jest w mozliwych ruchach po usunieci ostatniego
-      if (possibleMoves.contains(moveOnCube))
-        makeMove(moveOnCube, randInt.nextInt(3) + 1);
-      possibleMoves.clear();
+      makeMove(moveOnCube, randInt.nextInt(3) + 1);
+
+      // dodaj usuniety ruch
+      possibleMoves.add(previousMove);
+
       previousMove = moveOnCube;
     }
   }

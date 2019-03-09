@@ -37,6 +37,10 @@ public class PreinspectionState extends State {
       } else if (viewEvent.getEvent().isInGroup(AllowedEvents.Group.ROTATE)) {
         model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
       }
+    } else if (viewEvent.getEvent() == AllowedEvents.SCRAMBLE) {
+      solvingStatePostponed.interrupt();
+      this.model.scramble();
+      context.setState(new PreinspectionState(context, model, view));
     }
   }
 }
