@@ -3,8 +3,7 @@ package pl.edu.pw.jagiello.rubikscube.view;
 import pl.edu.pw.jagiello.rubikscube.model.Sticker;
 import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 import pl.edu.pw.jagiello.rubikscube.view.events.Event;
-import pl.edu.pw.jagiello.rubikscube.view.events.MultipleEvent;
-import pl.edu.pw.jagiello.rubikscube.view.events.SingleEvent;
+import pl.edu.pw.jagiello.rubikscube.view.events.CubeEvent;
 import pl.edu.pw.jagiello.rubikscube.view.timer.TimerPanel;
 
 import javax.swing.*;
@@ -52,7 +51,7 @@ class Window extends JFrame implements KeyListener {
     setBackground(Color.BLACK);
 
     // wypelnij mape znak na zdarzenie
-    keyToEventMap.put(KeyEvent.VK_ESCAPE, new SingleEvent(AllowedEvents.EXIT));
+    keyToEventMap.put(KeyEvent.VK_ESCAPE, new Event(AllowedEvents.EXIT));
     mapKey(KeyEvent.VK_J, AllowedEvents.MOVE_U, 1);
     mapKey(KeyEvent.VK_F, AllowedEvents.MOVE_U, 3);
     mapKey(KeyEvent.VK_I, AllowedEvents.MOVE_R, 1);
@@ -81,7 +80,7 @@ class Window extends JFrame implements KeyListener {
     mapKey(KeyEvent.VK_T, AllowedEvents.ROTATE_X, 1);
     mapKey(KeyEvent.VK_N, AllowedEvents.ROTATE_X, 3);
     mapKey(KeyEvent.VK_B, AllowedEvents.ROTATE_X, 3);
-    keyToEventMap.put(KeyEvent.VK_SPACE, new SingleEvent(AllowedEvents.SCRAMBLE));
+    keyToEventMap.put(KeyEvent.VK_SPACE, new Event(AllowedEvents.SCRAMBLE));
 
     this.eventQueue = eventQueue;
     panel = new Form();
@@ -97,7 +96,7 @@ class Window extends JFrame implements KeyListener {
   }
 
   private void mapKey(int vkJ, AllowedEvents moveU, int i) {
-    keyToEventMap.put(vkJ, new MultipleEvent(moveU, i));
+    keyToEventMap.put(vkJ, new CubeEvent(moveU, i));
   }
 
   /**
@@ -141,7 +140,7 @@ class Window extends JFrame implements KeyListener {
     timer.start();
   }
 
-  public void stopTimer() {
-    timer.stop();
+  public long stopTimer() {
+    return timer.stop();
   }
 }

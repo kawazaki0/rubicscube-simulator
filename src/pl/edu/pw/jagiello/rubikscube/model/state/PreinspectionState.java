@@ -4,7 +4,7 @@ import pl.edu.pw.jagiello.rubikscube.model.Model;
 import pl.edu.pw.jagiello.rubikscube.view.View;
 import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 import pl.edu.pw.jagiello.rubikscube.view.events.Event;
-import pl.edu.pw.jagiello.rubikscube.view.events.MultipleEvent;
+import pl.edu.pw.jagiello.rubikscube.view.events.CubeEvent;
 
 public class PreinspectionState extends State {
 
@@ -28,13 +28,12 @@ public class PreinspectionState extends State {
 
   @Override public void handle(final StateContext context, Event viewEvent) {
     super.handle(context, viewEvent);
-    if (viewEvent instanceof MultipleEvent) {
+    if (viewEvent instanceof CubeEvent) {
       if (viewEvent.getEvent().isInGroup(AllowedEvents.Group.MOVE)) {
         context.setState(() -> new SolvingState(model, view));
-
-        model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
+        model.makeMove(viewEvent.getEvent(), ((CubeEvent) viewEvent).getCount());
       } else if (viewEvent.getEvent().isInGroup(AllowedEvents.Group.ROTATE)) {
-        model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
+        model.makeMove(viewEvent.getEvent(), ((CubeEvent) viewEvent).getCount());
       }
     }
   }

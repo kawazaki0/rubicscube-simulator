@@ -29,11 +29,9 @@ public class View {
    * @param stickerArray - stan kostki
    */
   public void updateState(final Sticker[][][] stickerArray) {
-    SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        window.updateState(stickerArray);
-        window.repaint();
-      }
+    SwingUtilities.invokeLater(() -> {
+      window.updateState(stickerArray);
+      window.repaint();
     });
   }
 
@@ -45,9 +43,8 @@ public class View {
     window.startTimer();
   }
 
-  public void stopTimer() {
-    window.stopTimer();
-
+  public long stopTimer() {
+    return window.stopTimer();
   }
 
 }

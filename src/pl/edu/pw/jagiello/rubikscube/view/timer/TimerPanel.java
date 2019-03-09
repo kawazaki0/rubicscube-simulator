@@ -11,6 +11,7 @@ public class TimerPanel extends JPanel {
 
   private JLabel label;
   private Timer timer;
+  private long timeDelta;
 
   public TimerPanel() {
     label = new JLabel("Free mode", SwingConstants.LEFT);
@@ -28,8 +29,9 @@ public class TimerPanel extends JPanel {
     startTimer(new CountDownTimer(seconds), 100);
   }
 
-  public void stop() {
+  public long stop() {
     timer.stop();
+    return timeDelta;
   }
 
   private void startTimer(ActionListener timer, int delay) {
@@ -61,6 +63,7 @@ public class TimerPanel extends JPanel {
 
         if (time < endTime) {
           long timeLeft = (endTime - time);
+          timeDelta = timeLeft;
           label.setText("Preinspection: " + TimeUnit.NANOSECONDS.toSeconds(timeLeft) + "s");
         } else {
           ((Timer) e.getSource()).stop();
@@ -82,8 +85,8 @@ public class TimerPanel extends JPanel {
         startTime = System.nanoTime();
       } else {
         long time = System.nanoTime();
-
-        label.setText(formatSeconds(time - startTime) + " seconds");
+        timeDelta = time - startTime;
+        label.setText(formatSeconds(timeDelta) + " seconds");
         revalidate();
         repaint();
       }

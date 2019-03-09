@@ -5,7 +5,7 @@ package pl.edu.pw.jagiello.rubikscube.view.events;
  *
  * @author Maciej Jagiello
  */
-public class MultipleEvent extends Event {
+public class CubeEvent extends Event {
   /**
    * krotnosc ruchu
    */
@@ -15,7 +15,7 @@ public class MultipleEvent extends Event {
    * @param event event do wykonania
    * @param count krotnosc ruchu
    */
-  public MultipleEvent(final AllowedEvents event, final int count) {
+  public CubeEvent(final AllowedEvents event, final int count) {
     super(event);
     this.count = count;
   }
