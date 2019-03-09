@@ -1,10 +1,10 @@
 package pl.edu.pw.jagiello.rubikscube.view;
 
 import pl.edu.pw.jagiello.rubikscube.model.Sticker;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.AllowedEvents;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Event;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.MultipleEvent;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.SingleEvent;
+import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
+import pl.edu.pw.jagiello.rubikscube.view.events.Event;
+import pl.edu.pw.jagiello.rubikscube.view.events.MultipleEvent;
+import pl.edu.pw.jagiello.rubikscube.view.events.SingleEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ class Window extends JFrame implements KeyListener {
    */
   private final BlockingQueue<Event> eventQueue;
   /**
-   * keyToEventMap - mapa odwzorowywujaca znak na klawiaturze do zdarzenia
+   * keyToEventMap - mapa odwzorowywujaca znak na klawiaturze do events
    */
   private final Map<Integer, Event> keyToEventMap = new HashMap<Integer, Event>();
 

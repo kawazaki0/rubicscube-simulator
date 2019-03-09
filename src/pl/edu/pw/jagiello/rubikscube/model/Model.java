@@ -10,7 +10,7 @@ import pl.edu.pw.jagiello.rubikscube.model.moveapplier.LeftMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.MoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.RightMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.UpMoveApplier;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.AllowedEvents;
+import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class Model {
   private final Map<AllowedEvents, MoveApplier> moveApplier =
       new HashMap<AllowedEvents, MoveApplier>();
   /**
-   * Mapa <Losowa liczba, Typ zdarzenia czyli ruch>
+   * Mapa <Losowa liczba, Typ events czyli ruch>
    */
   private final Map<Integer, AllowedEvents> scrambler = new HashMap<Integer, AllowedEvents>();
   /**

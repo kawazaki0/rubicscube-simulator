@@ -1,7 +1,7 @@
 package pl.edu.pw.jagiello.rubikscube.view;
 
 import pl.edu.pw.jagiello.rubikscube.model.Sticker;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Event;
+import pl.edu.pw.jagiello.rubikscube.view.events.Event;
 
 import javax.swing.*;
 import java.util.concurrent.LinkedBlockingQueue;

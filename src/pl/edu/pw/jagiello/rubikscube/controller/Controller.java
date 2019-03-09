@@ -2,9 +2,9 @@ package pl.edu.pw.jagiello.rubikscube.controller;
 
 import pl.edu.pw.jagiello.rubikscube.model.Model;
 import pl.edu.pw.jagiello.rubikscube.view.View;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.AllowedEvents;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Event;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.MultipleEvent;
+import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
+import pl.edu.pw.jagiello.rubikscube.view.events.Event;
+import pl.edu.pw.jagiello.rubikscube.view.events.MultipleEvent;
 
 import java.util.HashSet;
 import java.util.Set;

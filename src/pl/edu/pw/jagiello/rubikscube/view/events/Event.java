@@ -1,4 +1,4 @@
-package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
+package pl.edu.pw.jagiello.rubikscube.view.events;
 
 /**
  * Klasa reprezentujaca zdarzenie na kostce
@@ -12,16 +12,16 @@ public class Event {
   protected AllowedEvents event;
 
   /**
-   * @param event - typ zdarzenia
+   * @param event - typ events
    */
   public Event(final AllowedEvents event) {
     this.event = event;
   }
 
   /**
-   * Zwraca rodzaj akcji danego zdarzenia
+   * Zwraca rodzaj akcji danego events
    *
-   * @return akcja - typ zdarzenia
+   * @return akcja - typ events
    */
   public AllowedEvents getEvent() {
     return event;

@@ -1,7 +1,7 @@
-package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
+package pl.edu.pw.jagiello.rubikscube.view.events;
 
 /**
- * Element zdarzenia przekazanego od użytkownika (tutaj z klawiatury) określający co ma
+ * Element events przekazanego od użytkownika (tutaj z klawiatury) określający co ma
  * zostać wykonane na kostce.
  *
  * @author Maciej Jagiełło

@@ -1,7 +1,7 @@
 /**
  *
  */
-package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
+package pl.edu.pw.jagiello.rubikscube.view.events;
 
 /**
  * Klasa reprezentujaca zdarzenie jednokrotne typu MozliweZdarzenia
@@ -12,7 +12,7 @@ public class SingleEvent extends Event {
 
   /**
    * @param event
-   *            - typ zdarzenia
+   *            - typ events
    */
   public SingleEvent(final AllowedEvents event) {
     super(event);

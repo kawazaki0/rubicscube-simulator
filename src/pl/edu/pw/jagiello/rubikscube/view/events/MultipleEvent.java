@@ -1,4 +1,4 @@
-package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
+package pl.edu.pw.jagiello.rubikscube.view.events;
 
 /**
  * Klasa reprezentujaca zdarzenie na kostce wraz z jego krotnoscia.
