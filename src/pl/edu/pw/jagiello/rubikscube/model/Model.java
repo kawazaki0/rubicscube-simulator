@@ -13,9 +13,11 @@ import pl.edu.pw.jagiello.rubikscube.model.moveapplier.UpMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -300,5 +302,26 @@ public class Model {
     if (moveApplier.containsKey(moveToProcess)) {
       moveApplier.get(moveToProcess).applyMove(rotateCount);
     }
+  }
+
+  public boolean isSolved() {
+    final Face front = face;
+    final Face right = face.getAxisY();
+    final Face back = face.getAxisY().getAxisY();
+    final Face left = face.getAxisY().getAxisY().getAxisY();
+    final Face up = face.getAxisX().getAxisX().getAxisX();
+    final Face down = face.getAxisX();
+    List<Face> faces = Arrays.asList(front, right, back, left, up, down);
+    for (Face f : faces) {
+      Sticker faceColor = f.getFaceState()[1][1];
+      for (Sticker[] row : f.getFaceState()) {
+        for (Sticker sticker : row) {
+          if (sticker != faceColor) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 }

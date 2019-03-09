@@ -1,6 +1,9 @@
 package pl.edu.pw.jagiello.rubikscube.controller;
 
 import pl.edu.pw.jagiello.rubikscube.model.Model;
+import pl.edu.pw.jagiello.rubikscube.model.state.FreeState;
+import pl.edu.pw.jagiello.rubikscube.model.state.State;
+import pl.edu.pw.jagiello.rubikscube.model.state.StateContext;
 import pl.edu.pw.jagiello.rubikscube.view.View;
 import pl.edu.pw.jagiello.rubikscube.view.events.AllowedEvents;
 import pl.edu.pw.jagiello.rubikscube.view.events.Event;
@@ -21,6 +24,10 @@ public class Controller {
    */
   final private Model model;
   /**
+   * 
+   */
+  final private StateContext state;
+  /**
    * Widok. Okno do wyswietlania symulacji
    */
   final private View view;
@@ -38,17 +45,8 @@ public class Controller {
    * blockingqueue). Inicjuje stan kostki na widoku.
    */
   public Controller() {
-    allowedMoves.add(AllowedEvents.ROTATE_X);
-    allowedMoves.add(AllowedEvents.ROTATE_Y);
-    allowedMoves.add(AllowedEvents.ROTATE_Z);
-    allowedMoves.add(AllowedEvents.MOVE_B);
-    allowedMoves.add(AllowedEvents.MOVE_F);
-    allowedMoves.add(AllowedEvents.MOVE_L);
-    allowedMoves.add(AllowedEvents.MOVE_R);
-    allowedMoves.add(AllowedEvents.MOVE_D);
-    allowedMoves.add(AllowedEvents.MOVE_U);
-
     model = new Model();
+    state = new StateContext(model);
     view = new View(eventQueue);
     view.updateState(model.getCubeStateView());
   }
@@ -61,19 +59,7 @@ public class Controller {
       Event viewEvent;
       try {
         viewEvent = eventQueue.take();
-
-        // obsluz akcje zamkniecia
-        if (viewEvent.getEvent() == AllowedEvents.EXIT) {
-          System.exit(0);
-        }
-        // obsluz akcje mieszania kostki
-        else if (viewEvent.getEvent() == AllowedEvents.SCRAMBLE) {
-          model.scramble();
-        }
-        // obsluz zdarzenie, ktore jest zdarzeniem ruchu na kostce
-        else if (viewEvent instanceof MultipleEvent) {
-          model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
-        }
+        state.handle(viewEvent);
       } catch (final InterruptedException e1) {
         e1.printStackTrace();
       }
