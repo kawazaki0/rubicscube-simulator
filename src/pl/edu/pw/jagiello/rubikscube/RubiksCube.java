@@ -17,11 +17,7 @@ public class RubiksCube
      */
     public static void main(final String[] args)
     {
-//    	String x = new String ("sdf");
-//    	StringBu
-//    	x+="fd";
-//    	System.out.println(x);
         final Controller controller = new Controller();
-        controller.robCos();
+        controller.doSomething();
     }
 }

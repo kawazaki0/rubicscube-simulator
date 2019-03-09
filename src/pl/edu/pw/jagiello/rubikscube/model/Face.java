@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * @author Maciej Jagiełło
  */
-class Sciana
+class Face
 {
     /**
      * sciana, ktora pojawi sie na miejsce poprzedniej po obroceniu wokol osi X (osi
@@ -22,7 +22,7 @@ class Sciana
      * |____|/
      * </pre>
      */
-    private Sciana axisX;
+    private Face axisX;
     
     /**
      * sciana, ktora pojawi sie na miejsce poprzedniej po obroceniu wokol osi Y (osi
@@ -36,7 +36,7 @@ class Sciana
      * |____|/
      * </pre>
      */
-    private Sciana axisY;
+    private Face axisY;
     
     /**
      * sciana, ktora pojawi sie na miejsce poprzedniej po obroceniu wokol osi Z (osi
@@ -50,26 +50,26 @@ class Sciana
      *  /
      * </pre>
      */
-    private Sciana axisZ;
+    private Face axisZ;
     
     /**
      * Dwuwymiarowa tablica Naklejek reprezentujaca na ktorej scianie powinna znalezc sie
      * naklejka
      */
-    private final Naklejka[][] pola;
+    private final Sticker[][] pola;
     
     /**
      * wypełnij dwuwymiarowa tablice Naklejek naklejkami z argumentu
      * 
-     * @param naklejka
+     * @param sticker
      *            naklejka do wypelniania
      */
-    Sciana(final Naklejka naklejka)
+    Face(final Sticker sticker)
     {
-        pola = new Naklejka[3][3];
-        for (final Naklejka[] element : pola)
+        pola = new Sticker[3][3];
+        for (final Sticker[] element : pola)
         {
-            Arrays.fill(element, naklejka);
+            Arrays.fill(element, sticker);
         }
     }
     
@@ -79,7 +79,7 @@ class Sciana
      * 
      * @return Sciana
      */
-    Sciana getAxisX()
+    Face getAxisX()
     {
         return axisX;
     }
@@ -90,7 +90,7 @@ class Sciana
      * 
      * @return Sciana
      */
-    Sciana getAxisY()
+    Face getAxisY()
     {
         return axisY;
     }
@@ -101,7 +101,7 @@ class Sciana
      * 
      * @return Sciana
      */
-    Sciana getAxisZ()
+    Face getAxisZ()
     {
         return axisZ;
     }
@@ -111,7 +111,7 @@ class Sciana
      * 
      * @return pola dwuwymiarowa tablica Naklejek
      */
-    Naklejka[][] getStanSciany()
+    Sticker[][] getFaceState()
     {
         return pola;
     }
@@ -121,18 +121,18 @@ class Sciana
      * 
      * @return Row Wiersz zbudowany z tablicy trzech Naklejek
      */
-    Wiersz getTopRow()
+    Row getTopRow()
     {
-        return (new Wiersz(pola[0][0], pola[0][1], pola[0][2]));
+        return (new Row(pola[0][0], pola[0][1], pola[0][2]));
     }
     
     /**
      * obraca sciane ClockWise czyli wg wskazowek zegara (8-miu Naklejek)
      */
-    void obrot()
+    void rotate()
     {
-        final Naklejka temp1 = pola[0][0];
-        final Naklejka temp2 = pola[0][1];
+        final Sticker temp1 = pola[0][0];
+        final Sticker temp2 = pola[0][1];
         
         // rogi
         pola[0][0] = pola[2][0];
@@ -151,16 +151,16 @@ class Sciana
      * zmienia orientacje scianki z góry na dół (nowy punkt początkowy w [2][2] (stary w
      * [0][0]))
      */
-    void odwroc()
+    void reverse()
     {
-        final List<Naklejka[]> listaWierszy = Arrays.asList(pola);
+        final List<Sticker[]> listaWierszy = Arrays.asList(pola);
         Collections.reverse(listaWierszy);
         
         for (int i = 0; i < listaWierszy.size(); i++)
         {
-            final List<Naklejka> wierszWLiscie = Arrays.asList(listaWierszy.get(i));
+            final List<Sticker> wierszWLiscie = Arrays.asList(listaWierszy.get(i));
             Collections.reverse(wierszWLiscie);
-            pola[i] = (Naklejka[]) wierszWLiscie.toArray();
+            pola[i] = (Sticker[]) wierszWLiscie.toArray();
         }
     }
     
@@ -171,7 +171,7 @@ class Sciana
      * @param axisX
      *            nowa sciana
      */
-    void setAxisX(final Sciana axisX)
+    void setAxisX(final Face axisX)
     {
         this.axisX = axisX;
     }
@@ -183,7 +183,7 @@ class Sciana
      * @param axisY
      *            nowa sciana
      */
-    void setAxisY(final Sciana axisY)
+    void setAxisY(final Face axisY)
     {
         this.axisY = axisY;
     }
@@ -195,7 +195,7 @@ class Sciana
      * @param axisZ
      *            nowa sciana
      */
-    void setAxisZ(final Sciana axisZ)
+    void setAxisZ(final Face axisZ)
     {
         this.axisZ = axisZ;
     }
@@ -203,10 +203,10 @@ class Sciana
     /**
      * Ustawia nowy wiersz w scianie
      * 
-     * @param nowyWiersz
+     * @param newRow
      */
-    void setTopRow(final Wiersz nowyWiersz)
+    void setTopRow(final Row newRow)
     {
-        System.arraycopy(nowyWiersz.getWiersz(), 0, pola[0], 0, nowyWiersz.getWiersz().length);
+        System.arraycopy(newRow.getRow(), 0, pola[0], 0, newRow.getRow().length);
     }
 }

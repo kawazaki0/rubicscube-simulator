@@ -30,7 +30,7 @@ public class UpMoveApplier implements MoveApplier
     {
         for (int i = 0; i < rot; i++)
         {
-            model.ruch();
+            model.moveU();
         }
     }
 }

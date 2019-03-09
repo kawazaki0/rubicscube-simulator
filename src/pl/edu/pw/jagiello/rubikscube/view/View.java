@@ -4,8 +4,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.SwingUtilities;
 
-import pl.edu.pw.jagiello.rubikscube.model.Naklejka;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Zdarzenie;
+import pl.edu.pw.jagiello.rubikscube.model.Sticker;
+import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Event;
 
 /**
  * Widok kostki rubika.
@@ -14,7 +14,7 @@ import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Zdarzenie;
  */
 public class View
 {
-    private final Okienko okienko;
+    private final Window window;
     
     /**
      * tworzy nowe okienko i przekazuje eventQueue do niego
@@ -22,9 +22,9 @@ public class View
      * @param eventQueue
      *            - kolejka zdarzen
      */
-    public View(final LinkedBlockingQueue<Zdarzenie> eventQueue)
+    public View(final LinkedBlockingQueue<Event> eventQueue)
     {
-        okienko = new Okienko(eventQueue);
+        window = new Window(eventQueue);
     }
     
     /**
@@ -33,14 +33,14 @@ public class View
      * @param tablicaNaklejek
      *            - stan kostki
      */
-    public void aktualizujStan(final Naklejka[][][] tablicaNaklejek)
+    public void updateState(final Sticker[][][] tablicaNaklejek)
     {
         SwingUtilities.invokeLater(new Runnable()
         {
             public void run()
             {
-                okienko.aktualizujStan(tablicaNaklejek);
-                okienko.repaint();
+                window.updateState(tablicaNaklejek);
+                window.repaint();
             }
         });
     }

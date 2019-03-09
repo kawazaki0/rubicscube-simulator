@@ -6,32 +6,32 @@ package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
  * 
  * @author Maciej Jagiełło
  */
-public enum MozliweZdarzenia
+public enum AllowedEvents
 {
     /** Ruch kostki sciana gorna */
-    RUCH_U,
+    MOVE_U,
     /** Ruch kostki sciana dolna */
-    RUCH_D,
+    MOVE_D,
     /** Ruch kostki sciana przednia */
-    RUCH_F,
+    MOVE_F,
     
     /** Ruch kostki sciana tylna */
-    RUCH_B,
+    MOVE_B,
     
     /** Ruch kostki sciana prawa */
-    RUCH_R,
+    MOVE_R,
     
     /** Ruch kostki sciana lewa */
-    RUCH_L,
+    MOVE_L,
     
     /** Obrot wzgledem osi X */
-    OBROT_X,
+    ROTATE_X,
     
     /** Obrot wzgledem osi Y */
-    OBROT_Y,
+    ROTATE_Y,
     
     /** Obrot wzgledem osi Z */
-    OBROT_Z,
+    ROTATE_Z,
     
     /** Mieszanie kostki */
     SCRAMBLE,

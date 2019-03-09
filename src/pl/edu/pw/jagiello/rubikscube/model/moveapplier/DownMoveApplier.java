@@ -28,13 +28,12 @@ public class DownMoveApplier implements MoveApplier
     
     public void applyMove(final int rot)
     {
-        model.obrotX();
-        model.obrotX();
-        for (int i = 0; i < rot; i++)
-        {
-            model.ruch();
+        model.rotateX();
+        model.rotateX();
+        for (int i = 0; i < rot; i++) {
+            model.moveU();
         }
-        model.obrotX();
-        model.obrotX();
+        model.rotateX();
+        model.rotateX();
     }
 }

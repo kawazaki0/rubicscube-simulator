@@ -8,16 +8,16 @@ package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
  * 
  * @author Maciej Jagiello
  */
-public class ZdarzenieJednokrotne extends Zdarzenie
+public class SingleEvent extends Event
 {
     
     /**
-     * @param akcja
+     * @param event
      *            - typ zdarzenia
      */
-    public ZdarzenieJednokrotne(final MozliweZdarzenia akcja)
+    public SingleEvent(final AllowedEvents event)
     {
-        super(akcja);
+        super(event);
     }
     
 }

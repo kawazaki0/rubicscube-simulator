@@ -5,21 +5,21 @@ package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
  * 
  * @author Maciej Jagiello
  */
-public class ZdarzenieWielokrotne extends Zdarzenie
+public class MultipleEvent extends Event
 {
     /** krotnosc ruchu */
-    private final int krotnosc;
+    private final int count;
     
     /**
-     * @param ruch
-     *            ruch do wykonania
-     * @param krot
+     * @param event
+     *            event do wykonania
+     * @param count
      *            krotnosc ruchu
      */
-    public ZdarzenieWielokrotne(final MozliweZdarzenia ruch, final int krot)
+    public MultipleEvent(final AllowedEvents event, final int count)
     {
-        super(ruch);
-        krotnosc = krot;
+        super(event);
+        this.count = count;
     }
     
     /**
@@ -27,10 +27,10 @@ public class ZdarzenieWielokrotne extends Zdarzenie
      * 
      * @return Krotnosc ruchu
      */
-    public int getKrotnosc()
+    public int getCount()
     
     {
-        return krotnosc;
+        return count;
     }
     
 }

@@ -28,7 +28,8 @@ public class AxisXRotateApplier implements MoveApplier
     
     public void applyMove(final int rot)
     {
-        for (int i = 0; i < rot; i++)
-            model.obrotX();
+        for (int i = 0; i < rot; i++) {
+            model.rotateX();
+        }
     }
 }

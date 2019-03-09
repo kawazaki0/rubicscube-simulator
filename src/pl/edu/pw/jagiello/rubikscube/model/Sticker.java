@@ -5,7 +5,7 @@ package pl.edu.pw.jagiello.rubikscube.model;
  * 
  * @author Maciej Jagiełło
  */
-public enum Naklejka
+public enum Sticker
 {
     /** Sciana gorna */
     UP,

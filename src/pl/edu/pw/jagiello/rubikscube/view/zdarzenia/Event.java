@@ -5,18 +5,18 @@ package pl.edu.pw.jagiello.rubikscube.view.zdarzenia;
  * 
  * @author Maciej Jagiello
  */
-public class Zdarzenie
+public class Event
 {
     /** akcja - zdarzenie na kostce */
-    protected MozliweZdarzenia akcja;
+    protected AllowedEvents event;
     
     /**
-     * @param akcja
+     * @param event
      *            - typ zdarzenia
      */
-    public Zdarzenie(final MozliweZdarzenia akcja)
+    public Event(final AllowedEvents event)
     {
-        this.akcja = akcja;
+        this.event = event;
     }
     
     /**
@@ -24,9 +24,9 @@ public class Zdarzenie
      * 
      * @return akcja - typ zdarzenia
      */
-    public MozliweZdarzenia getAkcja()
+    public AllowedEvents getEvent()
     {
-        return akcja;
+        return event;
     }
     
 }

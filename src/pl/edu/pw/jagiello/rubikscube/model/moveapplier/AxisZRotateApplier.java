@@ -28,7 +28,8 @@ public class AxisZRotateApplier implements MoveApplier
     
     public void applyMove(final int rot)
     {
-        for (int i = 0; i < rot; i++)
-            model.obrotZ();
+        for (int i = 0; i < rot; i++) {
+            model.rotateZ();
+        }
     }
 }

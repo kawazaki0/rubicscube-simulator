@@ -6,7 +6,7 @@ package pl.edu.pw.jagiello.rubikscube.view;
  * 
  * @author Maciej Jagiello
  */
-public class NaklejkaNaKostce
+public class StickerPolygon
 {
     /** x1 - 1. wspolrzedna x-owa czworokata */
     private final int x1;
@@ -32,14 +32,14 @@ public class NaklejkaNaKostce
     /** y4 - 4. wspolrzedna y-owa czworokata */
     private final int y4;
     
-    /** numerSciany nr sciany z tablicy naklejek */
-    private final int numerSciany;
+    /** faceNumber nr sciany z tablicy naklejek */
+    private final int faceNumber;
     
-    /** wspolrzednaNaklejekX wspolrzedna x w tablicy naklejek */
-    private final int wspolrzednaNaklejekX;
+    /** xCoord wspolrzedna x w tablicy naklejek */
+    private final int xCoord;
     
-    /** wspolrzednaNaklejekY wspolrzedna y w tablicy naklejek */
-    private final int wspolrzednaNaklejekY;
+    /** yCoord wspolrzedna y w tablicy naklejek */
+    private final int yCoord;
     
     /**
      * @param x1
@@ -58,15 +58,15 @@ public class NaklejkaNaKostce
      *            - 4. wspolrzedna x-owa czworokata
      * @param y4
      *            - 4. wspolrzedna y-owa czworokata
-     * @param nrSciany
+     * @param faceNumber
      *            - nr sciany z tablicy naklejek
-     * @param wspX
+     * @param xCoord
      *            - wspolrzedna x w tablicy naklejek
-     * @param wspY
+     * @param yCoord
      *            - wspolrzedna y w tablicy naklejek
      */
-    public NaklejkaNaKostce(final int x1, final int y1, final int x2, final int y2, final int x3, final int y3, final int x4, final int y4,
-            final int nrSciany, final int wspX, final int wspY)
+    public StickerPolygon(final int x1, final int y1, final int x2, final int y2, final int x3, final int y3, final int x4, final int y4,
+            final int faceNumber, final int xCoord, final int yCoord)
     {
         this.x1 = x1;
         this.y1 = y1;
@@ -76,9 +76,9 @@ public class NaklejkaNaKostce
         this.y3 = y3;
         this.x4 = x4;
         this.y4 = y4;
-        this.numerSciany = nrSciany;
-        this.wspolrzednaNaklejekX = wspX;
-        this.wspolrzednaNaklejekY = wspY;
+        this.faceNumber = faceNumber;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
     
     /**
@@ -86,7 +86,7 @@ public class NaklejkaNaKostce
      * 
      * @return 4-elementowa tablica wspolrzednych x-owych
      */
-    public int[] getPunktyX()
+    public int[] getPointsX()
     {
         final int[] result = new int[4];
         
@@ -103,7 +103,7 @@ public class NaklejkaNaKostce
      * 
      * @return 4-elementowa tablice wspolrzednych y-owych
      */
-    public int[] getPunktyY()
+    public int[] getPointsY()
     {
         final int[] result = new int[4];
         
@@ -118,31 +118,31 @@ public class NaklejkaNaKostce
     /**
      * zwroc index sciany z tablicy odpowiadajacej naklejkom w tablicy stanu kostki
      * 
-     * @return numerSciany - index sciany
+     * @return faceNumber - index sciany
      */
-    public int getSciana()
+    public int getFace()
     {
-        return numerSciany;
+        return faceNumber;
     }
     
     /**
      * zwroc wspolrzedna X z tablicy odpowiadajacej naklejkom
      * 
-     * @return wspolrzednaNaklejekX - wartosc wspolrzednej w tablicy naklejek stanu kostki
+     * @return xCoord - wartosc wspolrzednej w tablicy naklejek stanu kostki
      */
-    public int getWspolrzednaX()
+    public int getXCoord()
     {
-        return wspolrzednaNaklejekX;
+        return xCoord;
     }
     
     /**
      * zwroc wspolrzedna Y z tablicy odpowiadajacej naklejkom
      * 
-     * @return wspolrzednaNaklejekY - wartosc wspolrzednej w tablicy naklejek stanu kostki
+     * @return yCoord - wartosc wspolrzednej w tablicy naklejek stanu kostki
      */
-    public int getWspolrzednaY()
+    public int getYCoord()
     {
-        return wspolrzednaNaklejekY;
+        return yCoord;
     }
     
 }

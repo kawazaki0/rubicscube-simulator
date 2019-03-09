@@ -6,9 +6,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import pl.edu.pw.jagiello.rubikscube.model.Model;
 import pl.edu.pw.jagiello.rubikscube.view.View;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.MozliweZdarzenia;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Zdarzenie;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.ZdarzenieWielokrotne;
+import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.AllowedEvents;
+import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.Event;
+import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.MultipleEvent;
 
 /**
  * Kontroler kostki rubika.
@@ -22,9 +22,9 @@ public class Controller
      /** Widok. Okno do wyswietlania symulacji */
     final private View view;
     /** Kolekcja dozwolonych ruchów na kostce */
-    final private Set<MozliweZdarzenia> dozwoloneRuchy = new HashSet<MozliweZdarzenia>();
+    final private Set<AllowedEvents> allowedMoves = new HashSet<AllowedEvents>();
     /** kolejka zdarzeń wysyłanych z widoku do kontrolera */
-    final private LinkedBlockingQueue<Zdarzenie> eventQueue = new LinkedBlockingQueue<Zdarzenie>();
+    final private LinkedBlockingQueue<Event> eventQueue = new LinkedBlockingQueue<Event>();
     
     /**
      * Konstruktor wypełnia Set dozwolonych ruchów. Tworzy obiekt modelu i widoku (z
@@ -32,47 +32,47 @@ public class Controller
      */
     public Controller()
     {
-        dozwoloneRuchy.add(MozliweZdarzenia.OBROT_X);
-        dozwoloneRuchy.add(MozliweZdarzenia.OBROT_Y);
-        dozwoloneRuchy.add(MozliweZdarzenia.OBROT_Z);
-        dozwoloneRuchy.add(MozliweZdarzenia.RUCH_B);
-        dozwoloneRuchy.add(MozliweZdarzenia.RUCH_F);
-        dozwoloneRuchy.add(MozliweZdarzenia.RUCH_L);
-        dozwoloneRuchy.add(MozliweZdarzenia.RUCH_R);
-        dozwoloneRuchy.add(MozliweZdarzenia.RUCH_D);
-        dozwoloneRuchy.add(MozliweZdarzenia.RUCH_U);
+        allowedMoves.add(AllowedEvents.ROTATE_X);
+        allowedMoves.add(AllowedEvents.ROTATE_Y);
+        allowedMoves.add(AllowedEvents.ROTATE_Z);
+        allowedMoves.add(AllowedEvents.MOVE_B);
+        allowedMoves.add(AllowedEvents.MOVE_F);
+        allowedMoves.add(AllowedEvents.MOVE_L);
+        allowedMoves.add(AllowedEvents.MOVE_R);
+        allowedMoves.add(AllowedEvents.MOVE_D);
+        allowedMoves.add(AllowedEvents.MOVE_U);
         
         model = new Model();
         view = new View(eventQueue);
-        view.aktualizujStan(model.getStanKostkiView());
+        view.updateState(model.getCubeStateView());
     }
     
     /**
      * Funkcja z pętlą nieskończoną czekającą na zdarzenie z widoku.
      */
-    public void robCos()
+    public void doSomething()
     {
         while (true)
         {
-            Zdarzenie zdarzenieZWidoku;
+            Event viewEvent;
             try
             {
-                zdarzenieZWidoku = eventQueue.take();
+                viewEvent = eventQueue.take();
                 
                 // obsluz akcje zamkniecia
-                if (zdarzenieZWidoku.getAkcja() == MozliweZdarzenia.EXIT)
+                if (viewEvent.getEvent() == AllowedEvents.EXIT)
                 {
                     System.exit(0);
                 }
                 // obsluz akcje mieszania kostki
-                else if (zdarzenieZWidoku.getAkcja() == MozliweZdarzenia.SCRAMBLE)
+                else if (viewEvent.getEvent() == AllowedEvents.SCRAMBLE)
                 {
                     model.scramble();
                 }
                 // obsluz zdarzenie, ktore jest zdarzeniem ruchu na kostce
-                else if (zdarzenieZWidoku instanceof ZdarzenieWielokrotne)
+                else if (viewEvent instanceof MultipleEvent)
                 {
-                    model.zrobRuch(zdarzenieZWidoku.getAkcja(), ((ZdarzenieWielokrotne) zdarzenieZWidoku).getKrotnosc());
+                    model.makeMove(viewEvent.getEvent(), ((MultipleEvent) viewEvent).getCount());
                 }
             } 
             catch (final InterruptedException e1)
@@ -80,7 +80,7 @@ public class Controller
                 e1.printStackTrace();
             }
             
-            view.aktualizujStan(model.getStanKostkiView());
+            view.updateState(model.getCubeStateView());
         }
     }
 }

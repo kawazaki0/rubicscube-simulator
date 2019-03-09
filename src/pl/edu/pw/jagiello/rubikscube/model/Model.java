@@ -18,7 +18,7 @@ import pl.edu.pw.jagiello.rubikscube.model.moveapplier.LeftMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.MoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.RightMoveApplier;
 import pl.edu.pw.jagiello.rubikscube.model.moveapplier.UpMoveApplier;
-import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.MozliweZdarzenia;
+import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.AllowedEvents;
 
 /**
  * Klasa zawierajaca wszystko. 6 scian i metody operowania nimi
@@ -28,16 +28,16 @@ import pl.edu.pw.jagiello.rubikscube.view.zdarzenia.MozliweZdarzenia;
 public class Model
 {
     /** Referencja na przednia sciane */
-    private Sciana sciana;
+    private Face face;
     
     /** Mapa <Naklejka, ruch do wykonania> */
-    private final Map<MozliweZdarzenia, MoveApplier> moveApplier = new HashMap<MozliweZdarzenia, MoveApplier>();
+    private final Map<AllowedEvents, MoveApplier> moveApplier = new HashMap<AllowedEvents, MoveApplier>();
     
     /** Mapa <Losowa liczba, Typ zdarzenia czyli ruch> */
-    private final Map<Integer, MozliweZdarzenia> scrambler = new HashMap<Integer, MozliweZdarzenia>();
+    private final Map<Integer, AllowedEvents> scrambler = new HashMap<Integer, AllowedEvents>();
     
     /** Set <Naklejka, ruch do wykonania> */
-    private final Set<MozliweZdarzenia> ruchy = new HashSet<MozliweZdarzenia>();
+    private final Set<AllowedEvents> moves = new HashSet<AllowedEvents>();
     
     /**
      * Konstruktor. W szczegolnosci ustaw wszystkie polaczenia miedzy soba
@@ -45,63 +45,63 @@ public class Model
     public Model()
     {
         // wypelnij applier ruchów do metod wykonujacych dany ruch 
-        moveApplier.put(MozliweZdarzenia.RUCH_L, new LeftMoveApplier(this));
-        moveApplier.put(MozliweZdarzenia.RUCH_R, new RightMoveApplier(this));
-        moveApplier.put(MozliweZdarzenia.RUCH_U, new UpMoveApplier(this));
-        moveApplier.put(MozliweZdarzenia.RUCH_D, new DownMoveApplier(this));
-        moveApplier.put(MozliweZdarzenia.RUCH_F, new FrontMoveApplier(this));
-        moveApplier.put(MozliweZdarzenia.RUCH_B, new BackMoveApplier(this));
-        moveApplier.put(MozliweZdarzenia.OBROT_X, new AxisXRotateApplier(this));
-        moveApplier.put(MozliweZdarzenia.OBROT_Y, new AxisYRotateApplier(this));
-        moveApplier.put(MozliweZdarzenia.OBROT_Z, new AxisZRotateApplier(this));
+        moveApplier.put(AllowedEvents.MOVE_L, new LeftMoveApplier(this));
+        moveApplier.put(AllowedEvents.MOVE_R, new RightMoveApplier(this));
+        moveApplier.put(AllowedEvents.MOVE_U, new UpMoveApplier(this));
+        moveApplier.put(AllowedEvents.MOVE_D, new DownMoveApplier(this));
+        moveApplier.put(AllowedEvents.MOVE_F, new FrontMoveApplier(this));
+        moveApplier.put(AllowedEvents.MOVE_B, new BackMoveApplier(this));
+        moveApplier.put(AllowedEvents.ROTATE_X, new AxisXRotateApplier(this));
+        moveApplier.put(AllowedEvents.ROTATE_Y, new AxisYRotateApplier(this));
+        moveApplier.put(AllowedEvents.ROTATE_Z, new AxisZRotateApplier(this));
         
         // wypelnij mape wylosowanej liczby do ruchu 
-        scrambler.put(0, MozliweZdarzenia.RUCH_L);
-        scrambler.put(1, MozliweZdarzenia.RUCH_R);
-        scrambler.put(2, MozliweZdarzenia.RUCH_U);
-        scrambler.put(3, MozliweZdarzenia.RUCH_D);
-        scrambler.put(4, MozliweZdarzenia.RUCH_F);
-        scrambler.put(5, MozliweZdarzenia.RUCH_B);
+        scrambler.put(0, AllowedEvents.MOVE_L);
+        scrambler.put(1, AllowedEvents.MOVE_R);
+        scrambler.put(2, AllowedEvents.MOVE_U);
+        scrambler.put(3, AllowedEvents.MOVE_D);
+        scrambler.put(4, AllowedEvents.MOVE_F);
+        scrambler.put(5, AllowedEvents.MOVE_B);
         
         // wypelnij mape mozliwych ruchow podczas mieszania kostki 
-        ruchy.add(MozliweZdarzenia.RUCH_L);
-        ruchy.add(MozliweZdarzenia.RUCH_R);
-        ruchy.add(MozliweZdarzenia.RUCH_U);
-        ruchy.add(MozliweZdarzenia.RUCH_D);
-        ruchy.add(MozliweZdarzenia.RUCH_F);
-        ruchy.add(MozliweZdarzenia.RUCH_B);
+        moves.add(AllowedEvents.MOVE_L);
+        moves.add(AllowedEvents.MOVE_R);
+        moves.add(AllowedEvents.MOVE_U);
+        moves.add(AllowedEvents.MOVE_D);
+        moves.add(AllowedEvents.MOVE_F);
+        moves.add(AllowedEvents.MOVE_B);
         
         // stwórz nowe ściany i przyporządkuj im konkretne naklejki 
-        final Sciana right = new Sciana(Naklejka.RIGHT);
-        final Sciana left = new Sciana(Naklejka.LEFT);
-        final Sciana up = new Sciana(Naklejka.UP);
-        final Sciana down = new Sciana(Naklejka.DOWN);
-        final Sciana front = new Sciana(Naklejka.FRONT);
-        final Sciana back = new Sciana(Naklejka.BACK);
+        final Face rightFace = new Face(Sticker.RIGHT);
+        final Face leftFace = new Face(Sticker.LEFT);
+        final Face upFace = new Face(Sticker.UP);
+        final Face downFace = new Face(Sticker.DOWN);
+        final Face frontFace = new Face(Sticker.FRONT);
+        final Face backFace = new Face(Sticker.BACK);
         
         // utwórz powiązania miedzy scianami 
-        right.setAxisZ(up);
-        right.getAxisZ().setAxisZ(left);
-        right.getAxisZ().getAxisZ().setAxisZ(down);
-        right.getAxisZ().getAxisZ().getAxisZ().setAxisZ(right);
+        rightFace.setAxisZ(upFace);
+        rightFace.getAxisZ().setAxisZ(leftFace);
+        rightFace.getAxisZ().getAxisZ().setAxisZ(downFace);
+        rightFace.getAxisZ().getAxisZ().getAxisZ().setAxisZ(rightFace);
         
         // ustaw przednia sciane jako prawa 
-        front.setAxisY(right);
+        frontFace.setAxisY(rightFace);
         
         // nowe polaczenia dla nowej sciany przedniej 
-        front.getAxisY().setAxisY(back);
-        front.getAxisY().getAxisY().setAxisY(left);
-        front.getAxisY().getAxisY().getAxisY().setAxisY(front);
+        frontFace.getAxisY().setAxisY(backFace);
+        frontFace.getAxisY().getAxisY().setAxisY(leftFace);
+        frontFace.getAxisY().getAxisY().getAxisY().setAxisY(frontFace);
         
         // ustaw przednia sciane jako dolna 
-        front.setAxisX(down);
+        frontFace.setAxisX(downFace);
         
         // nowe polaczenia dla sciany przedniej 
-        front.getAxisX().setAxisX(back);
-        front.getAxisX().getAxisX().setAxisX(up);
-        front.getAxisX().getAxisX().getAxisX().setAxisX(front);
+        frontFace.getAxisX().setAxisX(backFace);
+        frontFace.getAxisX().getAxisX().setAxisX(upFace);
+        frontFace.getAxisX().getAxisX().getAxisX().setAxisX(frontFace);
         
-        sciana = front;
+        face = frontFace;
     }
     
     /**
@@ -109,9 +109,9 @@ public class Model
      * 
      * @return sciana - sciana na kostce
      */
-    Sciana getSciana()
+    Face getFace()
     {
-        return sciana;
+        return face;
     }
     
     /**
@@ -128,59 +128,59 @@ public class Model
      * 
      * @return Naklejka[SCIANA][WSP_X][WSP_Y] - tablice naklejek
      */
-    public Naklejka[][][] getStanKostkiView()
+    public Sticker[][][] getCubeStateView()
     {
-        final Naklejka[][][] stan = new Naklejka[6][3][3];
+        final Sticker[][][] state = new Sticker[6][3][3];
         
         // stworz liste scian
-        final ArrayList<Sciana> listaScian = new ArrayList<Sciana>();
-        listaScian.add(sciana);
-        listaScian.add(sciana.getAxisY());
-        listaScian.add(sciana.getAxisY().getAxisY());
-        listaScian.add(sciana.getAxisY().getAxisY().getAxisY());
-        listaScian.add(sciana.getAxisX().getAxisX().getAxisX());
-        listaScian.add(sciana.getAxisX());
+        final ArrayList<Face> faces = new ArrayList<Face>();
+        faces.add(face);
+        faces.add(face.getAxisY());
+        faces.add(face.getAxisY().getAxisY());
+        faces.add(face.getAxisY().getAxisY().getAxisY());
+        faces.add(face.getAxisX().getAxisX().getAxisX());
+        faces.add(face.getAxisX());
         
         // iterator przechodzenia po scianach
-        final Iterator<Sciana> iterSciana = listaScian.iterator();
+        final Iterator<Face> faceIter = faces.iterator();
         
         // przepisanie naklejek z listy scian do tablicy naklejek
-        Sciana t = null;
+        Face t = null;
         for (int k = 0; k < 6; k++)
         {
             // wybierz kolejna sciane
-            if (iterSciana.hasNext())
-                t = iterSciana.next();
+            if (faceIter.hasNext())
+                t = faceIter.next();
             
             // przepisz naklejki ze sciany do tablicy naklejek stanu kostki
-            for (int i = 0; i < t.getStanSciany().length; i++)
-                System.arraycopy(t.getStanSciany()[i], 0, stan[k][i], 0, t.getStanSciany()[i].length);
+            for (int i = 0; i < t.getFaceState().length; i++)
+                System.arraycopy(t.getFaceState()[i], 0, state[k][i], 0, t.getFaceState()[i].length);
         }
-        return stan;
+        return state;
     }
     
     /**
      * Obroc kostke wzgledem wspolrzednej X
      */
-    public void obrotX()
+    public void rotateX()
     {
         // obroc sciany
-        sciana.getAxisY().obrot();
-        sciana.getAxisY().getAxisY().getAxisY().obrot();
-        sciana.getAxisY().getAxisY().getAxisY().obrot();
-        sciana.getAxisY().getAxisY().getAxisY().obrot();
+        face.getAxisY().rotate();
+        face.getAxisY().getAxisY().getAxisY().rotate();
+        face.getAxisY().getAxisY().getAxisY().rotate();
+        face.getAxisY().getAxisY().getAxisY().rotate();
         
         // wprowadz nowe polaczenia miedzy scianami
-        final Sciana right = sciana.getAxisY();
-        final Sciana left = sciana.getAxisY().getAxisY().getAxisY();
-        final Sciana up = sciana.getAxisX().getAxisX().getAxisX();
-        final Sciana down = sciana.getAxisX();
-        final Sciana front = sciana;
-        final Sciana back = sciana.getAxisY().getAxisY();
+        final Face right = face.getAxisY();
+        final Face left = face.getAxisY().getAxisY().getAxisY();
+        final Face up = face.getAxisX().getAxisX().getAxisX();
+        final Face down = face.getAxisX();
+        final Face front = face;
+        final Face back = face.getAxisY().getAxisY();
         
         // zmien orientacje patrzenia na kostke ze sciany przedniej na prawa. nowa sciana
         // przednia jest poprzednia sciana prawa
-        sciana = down;
+        face = down;
         
         // nowe polaczenia dla sciany prawej
         right.setAxisZ(front);
@@ -189,31 +189,31 @@ public class Model
         right.getAxisZ().getAxisZ().getAxisZ().setAxisZ(right);
         
         // nowe polaczenia dla sciany przedniej
-        sciana.setAxisY(right);
-        sciana.getAxisY().setAxisY(up);
-        sciana.getAxisY().getAxisY().setAxisY(left);
-        sciana.getAxisY().getAxisY().getAxisY().setAxisY(sciana);
+        face.setAxisY(right);
+        face.getAxisY().setAxisY(up);
+        face.getAxisY().getAxisY().setAxisY(left);
+        face.getAxisY().getAxisY().getAxisY().setAxisY(face);
         
         // odwroc dolna i tylna sciane
-        sciana.getAxisX().odwroc();
-        sciana.getAxisX().getAxisX().odwroc();
+        face.getAxisX().reverse();
+        face.getAxisX().getAxisX().reverse();
         
     }
     
     /**
      * Obroc kostke wzgledem wspolrzednej Y
      */
-    public void obrotY()
+    public void rotateY()
     {
-        final Sciana right = sciana.getAxisY();
-        final Sciana left = sciana.getAxisY().getAxisY().getAxisY();
-        final Sciana up = sciana.getAxisX().getAxisX().getAxisX();
-        final Sciana down = sciana.getAxisX();
-        final Sciana front = sciana;
+        final Face right = face.getAxisY();
+        final Face left = face.getAxisY().getAxisY().getAxisY();
+        final Face up = face.getAxisX().getAxisX().getAxisX();
+        final Face down = face.getAxisX();
+        final Face front = face;
         
         // zmien orientacje patrzenia na kostke ze sciany przedniej na prawa. nowa sciana
         // przednia jest poprzednia sciana prawa
-        sciana = right;
+        face = right;
         
         // nowe polaczenia dla sciany prawej
         right.setAxisZ(up);
@@ -222,46 +222,46 @@ public class Model
         right.getAxisZ().getAxisZ().getAxisZ().setAxisZ(right);
         
         // nowe polaczenia dla sciany przedniej
-        sciana.setAxisX(down);
-        sciana.getAxisX().setAxisX(left);
-        sciana.getAxisX().getAxisX().setAxisX(up);
-        sciana.getAxisX().getAxisX().getAxisX().setAxisX(sciana);
+        face.setAxisX(down);
+        face.getAxisX().setAxisX(left);
+        face.getAxisX().getAxisX().setAxisX(up);
+        face.getAxisX().getAxisX().getAxisX().setAxisX(face);
         
         // obroc sciany
-        sciana.getAxisX().obrot();
-        sciana.getAxisX().obrot();
-        sciana.getAxisX().obrot();
-        sciana.getAxisX().getAxisX().getAxisX().obrot();
+        face.getAxisX().rotate();
+        face.getAxisX().rotate();
+        face.getAxisX().rotate();
+        face.getAxisX().getAxisX().getAxisX().rotate();
     }
     
     /**
      * Obroc kostke wzgledem wspolrzednej Z
      */
-    public void obrotZ()
+    public void rotateZ()
     {
         // wykonaj obroty wzgledem wspolrzednych Y i X aby uzyskac obrot wzgledem
         // wspolrzednej Z
-        obrotY();
-        obrotY();
-        obrotY();
-        obrotX();
-        obrotY();
+        rotateY();
+        rotateY();
+        rotateY();
+        rotateX();
+        rotateY();
     }
     
     /**
      * Obroc gorna warstwe o 90 st. zgodnie z ruchem wskazówek zegara.
      */
-    public void ruch()
+    public void moveU()
     {
         // obroc gorne sciane
-        sciana.getAxisX().getAxisX().getAxisX().obrot();
-        final Wiersz tempRow = new Wiersz(sciana.getTopRow());
+        face.getAxisX().getAxisX().getAxisX().rotate();
+        final Row tempRow = new Row(face.getTopRow());
         
         // przepisz gorne wiersze scian wokol osi Y
-        sciana.setTopRow(sciana.getAxisY().getTopRow());
-        sciana.getAxisY().setTopRow(sciana.getAxisY().getAxisY().getTopRow());
-        sciana.getAxisY().getAxisY().setTopRow(sciana.getAxisY().getAxisY().getAxisY().getTopRow());
-        sciana.getAxisY().getAxisY().getAxisY().setTopRow(tempRow);
+        face.setTopRow(face.getAxisY().getTopRow());
+        face.getAxisY().setTopRow(face.getAxisY().getAxisY().getTopRow());
+        face.getAxisY().getAxisY().setTopRow(face.getAxisY().getAxisY().getAxisY().getTopRow());
+        face.getAxisY().getAxisY().getAxisY().setTopRow(tempRow);
     }
     
     /**
@@ -269,43 +269,44 @@ public class Model
      */
     public void scramble()
     {
-        MozliweZdarzenia ruchNaKostce, ruchPoprzedni = null;
+        AllowedEvents moveOnCube, previousMove = null;
         final Random randInt = new Random();
         
         // kolekcja mozliwych ruchow do wykonania w danej iteracji z uwzglednieniem
         // niepowtarzania poprzedniego ruchu
-        final Set<MozliweZdarzenia> mozliweRuchy = new HashSet<MozliweZdarzenia>();
+        final Set<AllowedEvents> possibleMoves = new HashSet<AllowedEvents>();
         
         for (int i = 0; i < 50; i++)
         {
             // dodaj wszystkie mozliwe ruchy
-            mozliweRuchy.addAll(ruchy);
+            possibleMoves.addAll(moves);
             
             // usun poprzedni ruch
-            mozliweRuchy.remove(ruchPoprzedni);
+            possibleMoves.remove(previousMove);
             
             // wygeneruj nowy ruch
-            ruchNaKostce = scrambler.get(randInt.nextInt(6));
+            moveOnCube = scrambler.get(randInt.nextInt(6));
             
             // sprawdz czy jest w mozliwych ruchach po usunieci ostatniego
-            if (mozliweRuchy.contains(ruchNaKostce))
-                zrobRuch(ruchNaKostce, randInt.nextInt(3) + 1);
-            mozliweRuchy.clear();
-            ruchPoprzedni = ruchNaKostce;
+            if (possibleMoves.contains(moveOnCube))
+                makeMove(moveOnCube, randInt.nextInt(3) + 1);
+            possibleMoves.clear();
+            previousMove = moveOnCube;
         }
     }
     
     /**
      * Wykonaj ruch na kostce za pomoca MoveApplier'a
      * 
-     * @param ruchDoPrzetworzenia
+     * @param moveToProcess
      *            Ruch, ktory nalezy wykonac
-     * @param obrot
+     * @param rotate
      *            krotnosc ruchu
      */
-    public void zrobRuch(final MozliweZdarzenia ruchDoPrzetworzenia, final int obrot)
+    public void makeMove(final AllowedEvents moveToProcess, final int rotate)
     {
-        if (moveApplier.containsKey(ruchDoPrzetworzenia))
-            moveApplier.get(ruchDoPrzetworzenia).applyMove(obrot);
+        if (moveApplier.containsKey(moveToProcess)) {
+          moveApplier.get(moveToProcess).applyMove(rotate);
+        }
     }
 }
