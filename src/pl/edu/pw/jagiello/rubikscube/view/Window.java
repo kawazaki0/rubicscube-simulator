@@ -91,7 +91,7 @@ class Window extends JFrame implements KeyListener {
    * @param stickersArray - stan kostki
    */
   void updateState(final Sticker[][][] stickersArray) {
-    panel.aktualizujStan(stickersArray);
+    panel.updateState(stickersArray);
   }
 
   /**

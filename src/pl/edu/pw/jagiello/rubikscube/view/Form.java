@@ -130,10 +130,10 @@ class Form extends JPanel {
   /**
    * Aktualizacja stanu kostki w widoku
    *
-   * @param nak tablica naklejek
+   * @param stickerArray tablica naklejek
    */
-  void aktualizujStan(final Sticker[][][] nak) {
-    cubeState = nak;
+  void updateState(final Sticker[][][] stickerArray) {
+    cubeState = stickerArray;
   }
 
   protected void paintComponent(final Graphics g) {

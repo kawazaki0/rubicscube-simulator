@@ -15,6 +15,6 @@ public class RubiksCube {
    */
   public static void main(final String[] args) {
     final Controller controller = new Controller();
-    controller.doSomething();
+    controller.runLoop();
   }
 }

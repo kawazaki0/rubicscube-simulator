@@ -147,15 +147,15 @@ public class Model {
     final Iterator<Face> faceIter = faces.iterator();
 
     // przepisanie naklejek z listy scian do tablicy naklejek
-    Face t = null;
+    Face f = null;
     for (int k = 0; k < 6; k++) {
       // wybierz kolejna sciane
       if (faceIter.hasNext())
-        t = faceIter.next();
+        f = faceIter.next();
 
       // przepisz naklejki ze sciany do tablicy naklejek stanu kostki
-      for (int i = 0; i < t.getFaceState().length; i++)
-        System.arraycopy(t.getFaceState()[i], 0, state[k][i], 0, t.getFaceState()[i].length);
+      for (int i = 0; i < f.getFaceState().length; i++)
+        System.arraycopy(f.getFaceState()[i], 0, state[k][i], 0, f.getFaceState()[i].length);
     }
     return state;
   }

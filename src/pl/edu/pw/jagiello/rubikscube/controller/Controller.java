@@ -56,7 +56,7 @@ public class Controller {
   /**
    * Funkcja z pętlą nieskończoną czekającą na zdarzenie z widoku.
    */
-  public void doSomething() {
+  public void runLoop() {
     while (true) {
       Event viewEvent;
       try {

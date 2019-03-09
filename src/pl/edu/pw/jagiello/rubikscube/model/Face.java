@@ -14,7 +14,7 @@ class Face {
    * Dwuwymiarowa tablica Naklejek reprezentujaca na ktorej scianie powinna znalezc sie
    * naklejka
    */
-  private final Sticker[][] pola;
+  private final Sticker[][] stickers;
   /**
    * sciana, ktora pojawi sie na miejsce poprzedniej po obroceniu wokol osi X (osi
    * przechodzacej przez LR)
@@ -60,8 +60,8 @@ class Face {
    * @param sticker naklejka do wypelniania
    */
   Face(final Sticker sticker) {
-    pola = new Sticker[3][3];
-    for (final Sticker[] element : pola) {
+    stickers = new Sticker[3][3];
+    for (final Sticker[] element : stickers) {
       Arrays.fill(element, sticker);
     }
   }
@@ -127,12 +127,12 @@ class Face {
   }
 
   /**
-   * zwraca stan sciany, czyli pola typu enum
+   * zwraca stan sciany, czyli stickers typu enum
    *
-   * @return pola dwuwymiarowa tablica Naklejek
+   * @return stickers dwuwymiarowa tablica Naklejek
    */
   Sticker[][] getFaceState() {
-    return pola;
+    return stickers;
   }
 
   /**
@@ -141,7 +141,7 @@ class Face {
    * @return Row Wiersz zbudowany z tablicy trzech Naklejek
    */
   Row getTopRow() {
-    return (new Row(pola[0][0], pola[0][1], pola[0][2]));
+    return (new Row(stickers[0][0], stickers[0][1], stickers[0][2]));
   }
 
   /**
@@ -150,27 +150,27 @@ class Face {
    * @param newRow
    */
   void setTopRow(final Row newRow) {
-    System.arraycopy(newRow.getRow(), 0, pola[0], 0, newRow.getRow().length);
+    System.arraycopy(newRow.getRow(), 0, stickers[0], 0, newRow.getRow().length);
   }
 
   /**
    * obraca sciane ClockWise czyli wg wskazowek zegara (8-miu Naklejek)
    */
   void rotate() {
-    final Sticker temp1 = pola[0][0];
-    final Sticker temp2 = pola[0][1];
+    final Sticker temp1 = stickers[0][0];
+    final Sticker temp2 = stickers[0][1];
 
     // rogi
-    pola[0][0] = pola[2][0];
-    pola[2][0] = pola[2][2];
-    pola[2][2] = pola[0][2];
-    pola[0][2] = temp1;
+    stickers[0][0] = stickers[2][0];
+    stickers[2][0] = stickers[2][2];
+    stickers[2][2] = stickers[0][2];
+    stickers[0][2] = temp1;
 
     // krawedzie
-    pola[0][1] = pola[1][0];
-    pola[1][0] = pola[2][1];
-    pola[2][1] = pola[1][2];
-    pola[1][2] = temp2;
+    stickers[0][1] = stickers[1][0];
+    stickers[1][0] = stickers[2][1];
+    stickers[2][1] = stickers[1][2];
+    stickers[1][2] = temp2;
   }
 
   /**
@@ -178,13 +178,13 @@ class Face {
    * [0][0]))
    */
   void reverse() {
-    final List<Sticker[]> listaWierszy = Arrays.asList(pola);
-    Collections.reverse(listaWierszy);
+    final List<Sticker[]> rows = Arrays.asList(stickers);
+    Collections.reverse(rows);
 
-    for (int i = 0; i < listaWierszy.size(); i++) {
-      final List<Sticker> wierszWLiscie = Arrays.asList(listaWierszy.get(i));
-      Collections.reverse(wierszWLiscie);
-      pola[i] = (Sticker[]) wierszWLiscie.toArray();
+    for (int i = 0; i < rows.size(); i++) {
+      final List<Sticker> row = Arrays.asList(rows.get(i));
+      Collections.reverse(row);
+      stickers[i] = (Sticker[]) row.toArray();
     }
   }
 }

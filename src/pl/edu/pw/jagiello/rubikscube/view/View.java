@@ -26,12 +26,12 @@ public class View {
   /**
    * zaktualizuj stan na kostce w widoku i wyslij polecenie Swingowi odrysowania okienka
    *
-   * @param tablicaNaklejek - stan kostki
+   * @param stickerArray - stan kostki
    */
-  public void updateState(final Sticker[][][] tablicaNaklejek) {
+  public void updateState(final Sticker[][][] stickerArray) {
     SwingUtilities.invokeLater(new Runnable() {
       public void run() {
-        window.updateState(tablicaNaklejek);
+        window.updateState(stickerArray);
         window.repaint();
       }
     });
